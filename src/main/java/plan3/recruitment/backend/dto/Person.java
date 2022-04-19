@@ -3,8 +3,9 @@ package plan3.recruitment.backend.dto;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.validation.constraints.Pattern;
+import java.io.Serializable;
 
-public class Person {
+public class Person implements Serializable {
 
     @JsonProperty
     public  String email;
@@ -16,24 +17,7 @@ public class Person {
         this.email = email;
         this.personName = personName;
     }
-
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public PersonName getPersonName() {
-        return personName;
-    }
-
-    public void setPersonName(PersonName personName) {
-        this.personName = personName;
-    }
-
+    public Person(){}
     public static Person valueOf(final String email,final PersonName personName) {
         return new Person(email,personName);
     }

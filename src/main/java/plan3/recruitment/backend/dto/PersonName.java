@@ -14,7 +14,7 @@ public class PersonName {
         this.firstName = firstName;
         this.lastName = lastName;
     }
-
+    public PersonName(){}
     @Override
     public String toString() {
         return "PersonName{" +

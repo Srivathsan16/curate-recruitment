@@ -7,10 +7,9 @@ import java.util.List;
 
 public interface PersonService {
 
-    public HttpEntity<? extends Object> fetchPersonData(String email);
-    public boolean createPerson(Person person);
-    public boolean removePerson(String email) ;
-    public List<Person> fetchAll();
-
-    public boolean updatePerson(String email, Person person);
+     HttpEntity<? extends Object> fetchPersonData(String email);
+     boolean createPerson(Person person);
+     boolean removePerson(String email) ;
+     List<Person> fetchAll();
+     boolean updatePerson(String email, Person person);
 }

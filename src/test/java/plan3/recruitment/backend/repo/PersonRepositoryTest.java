@@ -1,4 +1,3 @@
-/*
 package plan3.recruitment.backend.repo;
 
 import org.junit.Before;
@@ -27,14 +26,14 @@ public class PersonRepositoryTest {
     @Test
     public void test_whenFetchAll() {
         PersonEntity personEntity = new PersonEntity();
-        personEntity.setEmail("s@gmail.com");
-        personEntity.setFirstName("Sri");
-        personEntity.setLastName("test");
+        personEntity.email="sritest@gmail.com";
+        personEntity.firstName = "Sri";
+        personEntity.lastName = "test";
 
         PersonEntity personEntity2 = new PersonEntity();
-        personEntity2.setEmail("sri@gmail.com");
-        personEntity2.setFirstName("Sri");
-        personEntity2.setLastName("Vathsan");
+        personEntity2.email = "srivathsan@gmail.com";
+        personEntity2.firstName = "Sri";
+        personEntity2.lastName = "Vathsan";
         personRepository.save(personEntity);
         personRepository.save(personEntity2);
 
@@ -47,21 +46,21 @@ public class PersonRepositoryTest {
     @Test
     public void test_whenFindByEmail() {
         PersonEntity personEntity = new PersonEntity();
-        personEntity.setEmail("s@gmail.com");
-        personEntity.setFirstName("Sri");
-        personEntity.setLastName("test");
+        personEntity.email="sritest@gmail.com";
+        personEntity.firstName = "Sri";
+        personEntity.lastName = "test";
         personRepository.save(personEntity);
 
-        PersonEntity result = personRepository.findByEmail(personEntity.getEmail());
-        assertEquals(result.getLastName(), personEntity.getLastName());
+        PersonEntity result = personRepository.findByEmail(personEntity.email);
+        assertEquals(result.lastName, personEntity.lastName);
     }
 
     @Test
     public void test_removePersonDetails() {
         PersonEntity personEntity = new PersonEntity();
-        personEntity.setEmail("s@gmail.com");
-        personEntity.setFirstName("Sri");
-        personEntity.setLastName("test");
+        personEntity.email="sritest@gmail.com";
+        personEntity.firstName = "Sri";
+        personEntity.lastName = "test";
         personRepository.save(personEntity);
         assertNotNull(personEntity);
 
@@ -69,4 +68,3 @@ public class PersonRepositoryTest {
         assertEquals(personRepository.findAll(), Collections.EMPTY_LIST);
     }
 }
-*/
