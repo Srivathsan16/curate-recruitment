@@ -2,7 +2,9 @@ package plan3.recruitment.backend.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class PersonName {
+import java.io.Serializable;
+
+public class PersonName implements Serializable {
 
     @JsonProperty
     public String firstName;

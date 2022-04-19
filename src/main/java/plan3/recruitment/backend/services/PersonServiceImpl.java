@@ -15,7 +15,6 @@ import plan3.recruitment.backend.error.CustomError;
 import plan3.recruitment.backend.error.CustomErrorMessage;
 import plan3.recruitment.backend.repositories.PersonRepository;
 
-import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 

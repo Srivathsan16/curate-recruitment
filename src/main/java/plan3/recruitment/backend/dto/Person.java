@@ -2,7 +2,6 @@ package plan3.recruitment.backend.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import javax.validation.constraints.Pattern;
 import java.io.Serializable;
 
 public class Person implements Serializable {

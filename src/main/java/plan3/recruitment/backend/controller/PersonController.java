@@ -67,7 +67,7 @@ public class PersonController {
     @PostMapping(value = "/update/{email}", consumes = "application/json")
     public  HttpEntity<?> updatePerson(@RequestBody Person person,@PathVariable("email") String email) {
         if(!personService.updatePerson(email,person)){
-            logger.error("No Person Data found", email);
+            logger.error("No Person Data found for email {}", email);
             return new ResponseEntity<>(new CustomErrorMessage(CustomError.NO_DATA_FOUND,"404"),HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>("Success",HttpStatus.OK);
