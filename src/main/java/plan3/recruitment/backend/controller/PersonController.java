@@ -47,7 +47,7 @@ public class PersonController {
     private HttpEntity<?> checkAndCreatePerson(Person person) {
         if(!personService.createPerson(person)){
             logger.error("Person information already exists");
-         new ResponseEntity<>(new CustomErrorMessage(CustomError.PERSON_ALREADY_EXISTS,"409"),HttpStatus.CONFLICT);
+         return new ResponseEntity<>(new CustomErrorMessage(CustomError.PERSON_ALREADY_EXISTS,"409"),HttpStatus.CONFLICT);
         }
        return  new ResponseEntity<>("Success",HttpStatus.OK);
     }
