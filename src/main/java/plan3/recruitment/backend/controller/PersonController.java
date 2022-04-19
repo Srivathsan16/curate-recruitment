@@ -1,6 +1,8 @@
 package plan3.recruitment.backend.controller;
 
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import plan3.recruitment.backend.dto.Person;
@@ -13,12 +15,13 @@ import java.util.Optional;
 @RestController
 public class PersonController {
 
+    private static final Logger logger = LogManager.getLogger(PersonController.class);
     @Autowired
     private PersonService personService;
 
     @GetMapping(value = "/findByEmail/{email}")
     public PersonEntity fetch(@PathVariable("email") String email) {
-        System.out.println("in find by email method " + email);
+       logger.info("Incoming email Id is >> {}",email );
       return personService.getPersonData(email);
     }
 
