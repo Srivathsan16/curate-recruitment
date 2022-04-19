@@ -2,6 +2,8 @@ package plan3.recruitment.backend.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import javax.validation.constraints.Pattern;
+
 public class Person {
 
     @JsonProperty
@@ -14,6 +16,7 @@ public class Person {
         this.email = email;
         this.personName = personName;
     }
+
 
     public String getEmail() {
         return email;
