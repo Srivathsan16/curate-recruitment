@@ -22,7 +22,7 @@ public class PersonServiceImpl implements PersonService{
     @Autowired
     public PersonRepository personRepository;
 
-    public HttpEntity<? extends Object> fetchPersonData(String email) {
+    public HttpEntity<?> fetchPersonData(String email) {
         System.out.println("Email is >>> " + email);
         PersonEntity personEntity =  personRepository.findByEmail(email);
         if(personEntity==null){
@@ -34,13 +34,18 @@ public class PersonServiceImpl implements PersonService{
     }
 
     @Transactional
-    public void save(Person person) {
+    public boolean createPerson(Person person) {
         System.out.println("in save method");
+        PersonEntity checkIfPersonExists = personRepository.findByEmail(person.email);
+        if(checkIfPersonExists!=null){
+            return false;
+        }
         PersonEntity personEntity = new PersonEntity();
         personEntity.email=person.email;
         personEntity.firstName = person.personName.firstName;
         personEntity.lastName = person.personName.lastName;
         personRepository.save(personEntity);
+        return true;
     }
 
     @Transactional
@@ -65,6 +70,18 @@ public class PersonServiceImpl implements PersonService{
             personList.add(person);
         }
         return personList;
+    }
+
+    @Override
+    public boolean updatePerson(String email, Person person) {
+        PersonEntity entity = personRepository.findByEmail(email);
+        if(entity==null){
+            return false;
+        }
+        entity.firstName = person.personName.firstName;
+        entity.lastName = person.personName.lastName;
+        personRepository.save(entity);
+        return true;
     }
 
 }

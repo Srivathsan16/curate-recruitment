@@ -27,27 +27,33 @@ public class PersonController {
     private PersonServiceImpl personService;
 
     @GetMapping(value = "/findByEmail/{email}")
-    public HttpEntity<? extends Object> fetch(@PathVariable("email") String email) {
-       if(!requestValidator(email)) {
+    public HttpEntity<?> fetch(@PathVariable("email") String email) {
+       if(requestValidator(email)) {
            logger.error("Email is not valid, please provide valid email {}", email);
            return new ResponseEntity<>(new CustomErrorMessage(CustomError.INVALID_EMAIL, "400"),HttpStatus.BAD_REQUEST);
        }
         return personService.fetchPersonData(email);
     }
 
-    @PostMapping(value="/save")
-    public HttpEntity<? extends Object> savePersonDetails(@RequestBody Person person) {
-        System.out.println("Person recieved is >>> " + person);
-        if (!requestValidator(person.email)) {
+    @PostMapping(value="/persons/create")
+    public HttpEntity<?> createPerson(@RequestBody Person person) {
+        if (requestValidator(person.email)) {
+            logger.error("Email is not valid, please provide valid email {}", person.email);
             return new ResponseEntity<>(new CustomErrorMessage(CustomError.INVALID_EMAIL, "400"),HttpStatus.BAD_REQUEST);
         }
-        personService.save(person);
-        return new ResponseEntity<>("Success",HttpStatus.OK);
+        return checkAndCreatePerson(person);
+    }
+
+    private HttpEntity<?> checkAndCreatePerson(Person person) {
+        if(!personService.createPerson(person)){
+            logger.error("Person information already exists");
+         new ResponseEntity<>(new CustomErrorMessage(CustomError.PERSON_ALREADY_EXISTS,"409"),HttpStatus.CONFLICT);
+        }
+       return  new ResponseEntity<>("Success",HttpStatus.OK);
     }
 
     @PostMapping(value="/persons/remove/{email}")
     public ResponseEntity<Boolean> removePerson(@PathVariable("email") String email){
-        System.out.println("Person that is going to be removed is >>> " + email);
         if(personService.removePerson(email))
             return new ResponseEntity<>(true,HttpStatus.OK);
         return new ResponseEntity<>(false,HttpStatus.NOT_FOUND);
@@ -55,21 +61,23 @@ public class PersonController {
 
     @GetMapping(value = "/findAll")
     public List<Person> fetchAll() {
-        System.out.println("Inside fetchALl method");
-        return personService.fetchAll();
+         return personService.fetchAll();
     }
 
-    //TODO
-    @PutMapping(value = "/update/{email}")
-    public void updatePerson() {
-
+    @PostMapping(value = "/update/{email}")
+    public  HttpEntity<?> updatePerson(@RequestBody Person person,@PathVariable("email") String email) {
+        if(!personService.updatePerson(email,person)){
+            logger.error("No Person Data found", email);
+            return new ResponseEntity<>(new CustomErrorMessage(CustomError.NO_DATA_FOUND,"404"),HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>("Success",HttpStatus.OK);
     }
 
     private boolean requestValidator(String email) {
             if(!email.isBlank() && !EMAIL_PATTERN.matcher(email).matches()) {
                 logger.error("Email {} is not valid ", email);
-                return false;
+                return true;
         }
-        return true;
+        return false;
     }
 }
